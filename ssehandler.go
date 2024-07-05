@@ -50,8 +50,6 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	// make sure to call the cleanup logic when this function exits.
 	defer sh.cleanupClient(ctx, id)
 
-	log.Printf("new connection from: %s (%s)\n", r.RemoteAddr, id)
-
 	// set the necessary SSE headers.
 	sh.setHeaders(w)
 
