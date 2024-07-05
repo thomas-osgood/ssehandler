@@ -33,6 +33,7 @@ func (sh *SSEHandler) generateID(attempt int) (id string, err error) {
 	var biglen *big.Int
 	var bigmin *big.Int
 	const charset string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	var charsetlen int64 = int64(len(charset))
 	var i int
 	var length int
 	const maxlen int = 15
@@ -74,7 +75,7 @@ func (sh *SSEHandler) generateID(attempt int) (id string, err error) {
 	for i = 0; i < length; i++ {
 		// calculate the random index to choose. if
 		// there is an error, choose index 0.
-		randidx, err = rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		randidx, err = rand.Int(rand.Reader, big.NewInt(charsetlen))
 		if err != nil {
 			randidx = big.NewInt(0)
 		}
