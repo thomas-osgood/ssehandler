@@ -1,5 +1,9 @@
 # SSE Handler
 
+![Static Badge](https://img.shields.io/badge/SSE%20Handler---?color=blue)
+![GitHub Release](https://img.shields.io/github/v/release/thomas-osgood/ssehandler)
+![GitHub License](https://img.shields.io/github/license/thomas-osgood/ssehandler)
+
 ## Overview
 
 This library is designed to be used by HTTP servers to setup server sent event (SSE) endpoints. The `SSEHandler` object handles setting up the necessary headers, and transmitting the data to the connected client.
