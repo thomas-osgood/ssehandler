@@ -87,6 +87,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 			// note: it is recommended that the data to be transmitted is
 			// in JSON format. this will help avoid transmission errors.
 			fmt.Fprintf(w, sseconst.DATA_TYPE_FORMAT, val.Event)
+			fmt.Fprintf(w, sseconst.DATA_EVENTID_FORMAT, val.Id)
 			fmt.Fprintf(w, sseconst.DATA_TRANSMIT_FORMAT, val.Data)
 			flusher.Flush()
 		}

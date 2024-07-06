@@ -1,5 +1,6 @@
 package constants
 
+const DATA_EVENTID_FORMAT string = "id: %s\n"
 const DATA_TRANSMIT_FORMAT string = "data: %s\n\n"
 const DATA_TYPE_FORMAT string = "event: %s\n"
 
