@@ -16,11 +16,11 @@ type SSEHandlerOption struct {
 
 type SSEMessage struct {
 	// name of the event that will be transmitted.
-	Event string
+	Event string `json:"event" xml:"event"`
 	// id assigned to the event type. (optional)
-	Id string
+	Id string `json:"id" xml:"id"`
 	// data to be transmitted to the client.
 	//
 	// for best results, this should be a JSON object.
-	Data string
+	Data string `json:"data" xml:"data"`
 }
