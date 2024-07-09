@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/google/uuid"
 	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
 	ssemsg "github.com/thomas-osgood/ssehandler/internal/messages"
 )
@@ -31,7 +32,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	var comms SSEChannel = make(SSEChannel)
 	var err error
 	var flusher http.Flusher
-	var id string
+	var id uuid.UUID
 	var ok bool
 	var val SSEMessage
 
