@@ -13,6 +13,8 @@ import (
 // function designed to execute the logic for when a client
 // disconnects from the SSE endpoint.
 func (sh *SSEHandler) cleanupClient(ctx context.Context, clientid uuid.UUID) {
+	sh.mu.Lock()
+	defer sh.mu.Unlock()
 	close(sh.clients[clientid])
 	delete(sh.clients, clientid)
 	ctx.Done()
@@ -21,6 +23,8 @@ func (sh *SSEHandler) cleanupClient(ctx context.Context, clientid uuid.UUID) {
 // function designed to check whether a client with the given
 // id already exists in the clients map.
 func (sh *SSEHandler) clientIdExists(id uuid.UUID) (exists bool) {
+	sh.mu.Lock()
+	defer sh.mu.Unlock()
 	_, exists = sh.clients[id]
 	return exists
 }
