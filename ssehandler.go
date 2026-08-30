@@ -46,7 +46,9 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 
 	// add the communications channel to the clients map. this
 	// allows for transmission of the same data to multiple clients.
+	sh.mu.Lock()
 	sh.clients[id] = comms
+	sh.mu.Unlock()
 
 	// make sure to call the cleanup logic when this function exits.
 	defer sh.cleanupClient(ctx, id)
