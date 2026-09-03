@@ -1,7 +1,6 @@
 package ssehandler
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -28,7 +27,6 @@ import (
 //
 // https://www.kelche.co/blog/go/server-sent-events/
 func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
-	var ctx context.Context = context.Background()
 	var comms SSEChannel = make(SSEChannel)
 	var err error
 	var flusher http.Flusher
@@ -71,8 +69,6 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	for {
 		select {
 		case <-r.Context().Done():
-			return
-		case <-ctx.Done():
 			return
 		case val, ok = <-comms:
 
