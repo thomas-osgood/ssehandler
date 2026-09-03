@@ -1,7 +1,6 @@
 package ssehandler
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 
@@ -12,12 +11,11 @@ import (
 
 // function designed to execute the logic for when a client
 // disconnects from the SSE endpoint.
-func (sh *SSEHandler) cleanupClient(ctx context.Context, clientid uuid.UUID) {
+func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 	sh.mu.Lock()
 	defer sh.mu.Unlock()
 	close(sh.clients[clientid])
 	delete(sh.clients, clientid)
-	ctx.Done()
 }
 
 // function designed to check whether a client with the given
