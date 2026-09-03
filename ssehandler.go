@@ -51,7 +51,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	sh.mu.Unlock()
 
 	// make sure to call the cleanup logic when this function exits.
-	defer sh.cleanupClient(ctx, id)
+	defer sh.cleanupClient(id)
 
 	// set the necessary SSE headers.
 	sh.setHeaders(w)
