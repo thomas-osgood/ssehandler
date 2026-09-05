@@ -4,6 +4,10 @@ const DATA_EVENTID_FORMAT string = "id: %s\n"
 const DATA_TRANSMIT_FORMAT string = "data: %s\n\n"
 const DATA_TYPE_FORMAT string = "event: %s\n"
 
+// default size of the comms channel that will be
+// initialized in EndpointFunc.
+const DEFAULT_BUFFER_SIZE int = 256
+
 const GENERATE_ATTEMPT_MAX int = 10
 
 const HEADER_ACALLOW_NAM string = "Access-Control-Allow-Origin"

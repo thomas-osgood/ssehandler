@@ -1,8 +1,11 @@
 package ssehandler
 
+import "sync"
+
 type SSEHandler struct {
 	clients       SSEChannelMap
 	customHeaders HeaderMap
+	mu            sync.Mutex
 }
 
 type SSEHandlerOption struct {
