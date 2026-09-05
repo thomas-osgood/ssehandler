@@ -1,12 +1,10 @@
 package ssehandler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
 	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
-	ssemsg "github.com/thomas-osgood/ssehandler/internal/messages"
 )
 
 // function designed to execute the logic for when a client
@@ -18,39 +16,16 @@ func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 	delete(sh.clients, clientid)
 }
 
-// function designed to check whether a client with the given
-// id already exists in the clients map.
-func (sh *SSEHandler) clientIdExists(id uuid.UUID) (exists bool) {
-	sh.mu.Lock()
-	defer sh.mu.Unlock()
-	_, exists = sh.clients[id]
-	return exists
-}
-
 // function designed to generate a unique id for a client using a-zA-Z0-9.
-func (sh *SSEHandler) generateID(attempt int) (id uuid.UUID, err error) {
+//
+// update 2026-09-04:
+// removed pre-existing check for client existence because of extremely small
+// potential of collisions. the check added unnecssary overhead.
+func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 
-	id, err = uuid.NewUUID()
+	id, err = uuid.NewRandom()
 	if err != nil {
 		return uuid.Nil, err
-	}
-
-	// if the id already exists in the map, attempt to
-	// generate another id.
-	//
-	// if the maximum number of attempts has been reached
-	// return an error.
-	//
-	// if the maximum number of attempts has not yet been
-	// reached, the attempt number will be incremented and
-	// this function will be called recursively.
-	if sh.clientIdExists(id) {
-		if attempt >= sseconst.GENERATE_ATTEMPT_MAX {
-			return uuid.Nil, fmt.Errorf(ssemsg.ERR_GENERATEID_MAXATTEMPTS)
-		}
-
-		attempt++
-		return sh.generateID(attempt)
 	}
 
 	return id, nil
