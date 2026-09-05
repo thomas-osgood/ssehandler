@@ -27,7 +27,7 @@ import (
 //
 // https://www.kelche.co/blog/go/server-sent-events/
 func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
-	var comms SSEChannel = make(SSEChannel)
+	var comms SSEChannel = make(SSEChannel, sseconst.DEFAULT_BUFFER_SIZE)
 	var err error
 	var flusher http.Flusher
 	var id uuid.UUID
