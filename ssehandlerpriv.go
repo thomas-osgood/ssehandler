@@ -16,15 +16,6 @@ func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 	delete(sh.clients, clientid)
 }
 
-// function designed to check whether a client with the given
-// id already exists in the clients map.
-func (sh *SSEHandler) clientIdExists(id uuid.UUID) (exists bool) {
-	sh.mu.Lock()
-	defer sh.mu.Unlock()
-	_, exists = sh.clients[id]
-	return exists
-}
-
 // function designed to generate a unique id for a client using a-zA-Z0-9.
 //
 // update 2026-09-04:
