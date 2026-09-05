@@ -26,6 +26,10 @@ func (sh *SSEHandler) clientIdExists(id uuid.UUID) (exists bool) {
 }
 
 // function designed to generate a unique id for a client using a-zA-Z0-9.
+//
+// update 2026-09-04:
+// removed pre-existing check for client existence because of extremely small
+// potential of collisions. the check added unnecssary overhead.
 func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 
 	id, err = uuid.NewUUID()
