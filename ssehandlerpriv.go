@@ -23,7 +23,7 @@ func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 // potential of collisions. the check added unnecssary overhead.
 func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 
-	id, err = uuid.NewUUID()
+	id, err = uuid.NewRandom()
 	if err != nil {
 		return uuid.Nil, err
 	}
