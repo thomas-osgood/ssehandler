@@ -1,7 +1,6 @@
 package ssehandler
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -28,7 +27,6 @@ import (
 //
 // https://www.kelche.co/blog/go/server-sent-events/
 func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
-	var ctx context.Context = context.Background()
 	var comms SSEChannel = make(SSEChannel)
 	var err error
 	var flusher http.Flusher
@@ -42,6 +40,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	id, err = sh.generateID(0)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	// add the communications channel to the clients map. this
@@ -51,7 +50,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	sh.mu.Unlock()
 
 	// make sure to call the cleanup logic when this function exits.
-	defer sh.cleanupClient(ctx, id)
+	defer sh.cleanupClient(id)
 
 	// set the necessary SSE headers.
 	sh.setHeaders(w)
@@ -72,8 +71,6 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 		select {
 		case <-r.Context().Done():
 			return
-		case <-ctx.Done():
-			return
 		case val, ok = <-comms:
 
 			// if the channel has been closed, return.
@@ -89,9 +86,13 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 			//
 			// note: it is recommended that the data to be transmitted is
 			// in JSON format. this will help avoid transmission errors.
-			fmt.Fprintf(w, sseconst.DATA_TYPE_FORMAT, val.Event)
-			fmt.Fprintf(w, sseconst.DATA_EVENTID_FORMAT, val.Id)
-			fmt.Fprintf(w, sseconst.DATA_TRANSMIT_FORMAT, val.Data)
+			fmt.Fprintf(
+				w,
+				"%s%s%s",
+				fmt.Sprintf(sseconst.DATA_TYPE_FORMAT, val.Event),
+				fmt.Sprintf(sseconst.DATA_EVENTID_FORMAT, val.Id),
+				fmt.Sprintf(sseconst.DATA_TRANSMIT_FORMAT, val.Data),
+			)
 			flusher.Flush()
 		}
 	}
