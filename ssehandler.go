@@ -37,7 +37,7 @@ func (sh *SSEHandler) EndpointFunc(w http.ResponseWriter, r *http.Request) {
 	// generate a random ID to attach to the current client.
 	// this will be the client's key in the map and be associated
 	// with the channel used to communicate with the client.
-	id, err = sh.generateID(0)
+	id, err = sh.generateID()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
