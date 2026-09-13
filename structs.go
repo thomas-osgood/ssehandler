@@ -39,6 +39,10 @@ this is a structure internal to the SSEHandler package
 and is meant to be set during the New() call.
 */
 type CorsOptions struct {
+	// list of which response headers should be made
+	// available to scripts running in the browser in
+	// response to a cross-origin request.
 	ExposeHeaders []string
-	Origins       []string
+	// list of allowed origins for CORS
+	Origins []string
 }
