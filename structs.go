@@ -13,6 +13,8 @@ type SSEHandlerOption struct {
 	// map of channels that will be used to transmit
 	// information to the SSE endpoint.
 	Clients SSEChannelMap
+	// CORS options for the SSEHandler.
+	CorsSettings CorsOptions
 	// user-defined custom headers that will be set by
 	// the sever when an SSE connection gets established.
 	CustomHeaders HeaderMap
