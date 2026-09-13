@@ -41,6 +41,7 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	// assign the user-specified values to the SSEHandler to return.
 	ssehandle = new(SSEHandler)
 	ssehandle.clients = defaults.Clients
+	ssehandle.corssettings = defaults.CorsSettings
 	ssehandle.customHeaders = defaults.CustomHeaders
 
 	return ssehandle, nil
