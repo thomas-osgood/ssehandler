@@ -3,6 +3,7 @@ package ssehandler
 import (
 	"fmt"
 	"slices"
+	"strings"
 
 	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
 	ssemsg "github.com/thomas-osgood/ssehandler/internal/messages"
@@ -55,6 +56,18 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 			return fmt.Errorf(ssemsg.ERR_EMPTY_MAP)
 		}
 		so.Clients = clients
+		return nil
+	}
+}
+
+// add an allowed origin to the list of CORS Origins.
+func WithCORSOrigin(origin string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		origin = strings.TrimSpace(origin)
+		if len(origin) < 1 {
+			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
+		}
+		so.CorsSettings.Origins = append(so.CorsSettings.Origins, origin)
 		return nil
 	}
 }
