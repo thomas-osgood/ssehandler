@@ -2,6 +2,7 @@ package ssehandler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
@@ -39,9 +40,10 @@ func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 func (sh *SSEHandler) setHeaders(w http.ResponseWriter) {
 	var headerName string
 	var headerValue string
+	var corsOrigins string = strings.Join(sh.corssettings.Origins, " ")
 
 	// set the headers necessary for the server-sent-events to work.
-	w.Header().Set(sseconst.HEADER_ACALLOW_NAM, sseconst.HEADER_ACALLOW_VAL)
+	w.Header().Set(sseconst.HEADER_ACALLOW_NAM, corsOrigins)
 	w.Header().Set(sseconst.HEADER_ACEXPOSE_NAM, sseconst.HEADER_ACEXPOSE_VAL)
 	w.Header().Set(sseconst.HEADER_ACCELBUFFER_NAM, sseconst.HEADER_ACCELBUFFER_VAL)
 	w.Header().Set(sseconst.HEADER_CONTENTTYPE_NAM, sseconst.HEADER_CONTENTTYPE_VAL)
