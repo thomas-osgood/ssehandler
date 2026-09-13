@@ -39,5 +39,6 @@ this is a structure internal to the SSEHandler package
 and is meant to be set during the New() call.
 */
 type CorsOptions struct {
-	Origins []string
+	ExposeHeaders []string
+	Origins       []string
 }
