@@ -4,6 +4,7 @@ import "sync"
 
 type SSEHandler struct {
 	clients       SSEChannelMap
+	corssettings  CorsOptions
 	customHeaders HeaderMap
 	mu            sync.Mutex
 }
@@ -26,4 +27,15 @@ type SSEMessage struct {
 	//
 	// for best results, this should be a JSON object.
 	Data string `json:"data" xml:"data"`
+}
+
+/*
+struct defining the various CORS options that can be
+applied/used by the SSEHandler.
+
+this is a structure internal to the SSEHandler package
+and is meant to be set during the New() call.
+*/
+type CorsOptions struct {
+	Origins []string
 }
