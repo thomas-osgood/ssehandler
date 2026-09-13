@@ -11,14 +11,19 @@ func (co *CorsOptions) cleanOrigins() {
 		return
 	}
 
+	var added map[string]struct{} = make(map[string]struct{})
+	var exists bool
 	var n int = 0
 	var o string
 
 	for _, o = range co.Origins {
 		o = strings.ToLower(strings.TrimSpace(o))
 		if len(o) > 0 {
-			co.Origins[n] = o
-			n++
+			if _, exists = added[o]; !exists {
+				added[o] = struct{}{}
+				co.Origins[n] = o
+				n++
+			}
 		}
 	}
 
