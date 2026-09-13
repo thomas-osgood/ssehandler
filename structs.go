@@ -43,6 +43,11 @@ type CorsOptions struct {
 	// available to scripts running in the browser in
 	// response to a cross-origin request.
 	ExposeHeaders []string
+	// indicates how long the results of a preflight
+	// request (that is, the information contained in the
+	// Access-Control-Allow-Methods and Access-Control-Allow-Headers
+	// headers) can be cached.
+	MaxAge int
 	// list of allowed origins for CORS
 	Origins []string
 }
