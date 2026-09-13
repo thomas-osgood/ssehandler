@@ -59,6 +59,14 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 	}
 }
 
+// set the allowed origins to the string slice passed in.
+func WithCORSOrigins(origins []string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		so.CorsSettings.Origins = origins
+		return nil
+	}
+}
+
 // set any custom headers that are desired when setting up the SSE endpoint.
 // these will be set by the server upon client connection.
 func WithCustomHeaders(customHaders HeaderMap) SSEHandlerOptFunc {
