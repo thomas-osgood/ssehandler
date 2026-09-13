@@ -2,7 +2,9 @@ package ssehandler
 
 import (
 	"fmt"
+	"slices"
 
+	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
 	ssemsg "github.com/thomas-osgood/ssehandler/internal/messages"
 )
 
@@ -12,6 +14,7 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	var curopt SSEHandlerOptFunc
 	var defaults SSEHandlerOption = SSEHandlerOption{
 		Clients:       nil,
+		CorsSettings:  CorsOptions{},
 		CustomHeaders: make(HeaderMap),
 	}
 
@@ -27,6 +30,12 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	// track of the clients connecting into the SSE endpoint.
 	if defaults.Clients == nil {
 		return nil, fmt.Errorf(ssemsg.ERR_EMPTY_MAP)
+	}
+
+	// if no CORS Origins have been specified, default to "*"
+	defaults.CorsSettings.cleanOrigins()
+	if len(defaults.CorsSettings.Origins) < 1 {
+		defaults.CorsSettings.Origins = slices.Insert(defaults.CorsSettings.Origins, 0, sseconst.HEADER_ACALLOW_VAL)
 	}
 
 	// assign the user-specified values to the SSEHandler to return.
