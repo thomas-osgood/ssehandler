@@ -8,6 +8,10 @@ const DATA_TYPE_FORMAT string = "event: %s\n"
 // initialized in EndpointFunc.
 const DEFAULT_BUFFER_SIZE int = 256
 
+// default value for the CORS MaxAge option. this value will
+// be used to indicate the header be left blank.
+const DEFAULT_MAXAGE int = 0
+
 const GENERATE_ATTEMPT_MAX int = 10
 
 const HEADER_ACALLOW_NAM string = "Access-Control-Allow-Origin"
