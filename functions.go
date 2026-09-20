@@ -96,7 +96,7 @@ func WithCustomHeaders(customHaders HeaderMap) SSEHandlerOptFunc {
 func WithMaxAge(maxAge int) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		if maxAge < 1 {
-			return fmt.Errorf("max age must be a positive value")
+			return fmt.Errorf(ssemsg.ERR_MAXAGE_NOTPOS)
 		}
 
 		so.CorsSettings.MaxAge = maxAge
