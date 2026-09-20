@@ -91,3 +91,15 @@ func WithCustomHeaders(customHaders HeaderMap) SSEHandlerOptFunc {
 		return nil
 	}
 }
+
+// set the max age for the preflight cache.
+func WithMaxAge(maxAge int) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		if maxAge < 1 {
+			return fmt.Errorf("max age must be a positive value")
+		}
+
+		so.CorsSettings.MaxAge = maxAge
+		return nil
+	}
+}
