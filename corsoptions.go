@@ -1,6 +1,8 @@
 package ssehandler
 
 import (
+	"net/http"
+
 	"github.com/thomas-osgood/ssehandler/internal/utils"
 )
 
@@ -13,7 +15,30 @@ func (co *CorsOptions) cleanMethods() {
 		return
 	}
 
+	var curMethod string
+	var exists bool
+	var finalSlice []string
+	var validMethods = map[string]struct{}{
+		http.MethodGet:     {},
+		http.MethodHead:    {},
+		http.MethodPost:    {},
+		http.MethodPut:     {},
+		http.MethodPatch:   {},
+		http.MethodDelete:  {},
+		http.MethodConnect: {},
+		http.MethodOptions: {},
+		http.MethodTrace:   {},
+	}
+
 	co.AllowedMethods = utils.UniqueSlice(co.AllowedMethods)
+
+	for _, curMethod = range co.AllowedMethods {
+		if _, exists = validMethods[curMethod]; exists {
+			finalSlice = append(finalSlice, curMethod)
+		}
+	}
+
+	co.AllowedMethods = finalSlice
 }
 
 /*
