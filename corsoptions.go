@@ -27,3 +27,11 @@ func (co *CorsOptions) cleanOrigins() {
 
 	co.Origins = utils.UniqueSlice(co.Origins)
 }
+
+/*
+go through all string slices and clean them.
+*/
+func (co *CorsOptions) cleanSlices() {
+	co.cleanMethods()
+	co.cleanOrigins()
+}
