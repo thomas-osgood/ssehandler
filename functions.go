@@ -35,8 +35,10 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 		return nil, fmt.Errorf(ssemsg.ERR_EMPTY_MAP)
 	}
 
+	// clean all CORS string slices
+	defaults.CorsSettings.cleanSlices()
+
 	// if no CORS Origins have been specified, default to "*"
-	defaults.CorsSettings.cleanOrigins()
 	if len(defaults.CorsSettings.Origins) < 1 {
 		defaults.CorsSettings.Origins = slices.Insert(defaults.CorsSettings.Origins, 0, sseconst.HEADER_ACALLOW_VAL)
 	}
