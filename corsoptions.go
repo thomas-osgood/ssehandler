@@ -30,7 +30,7 @@ func (co *CorsOptions) cleanMethods() {
 		http.MethodTrace:   {},
 	}
 
-	co.AllowedMethods = utils.UniqueSlice(co.AllowedMethods)
+	co.AllowedMethods = utils.UniqueSlice(co.AllowedMethods, true)
 
 	for _, curMethod = range co.AllowedMethods {
 		if _, exists = validMethods[curMethod]; exists {
@@ -50,7 +50,7 @@ func (co *CorsOptions) cleanOrigins() {
 		return
 	}
 
-	co.Origins = utils.UniqueSlice(co.Origins)
+	co.Origins = utils.UniqueSlice(co.Origins, false)
 }
 
 /*
