@@ -1,6 +1,8 @@
 package ssehandler
 
-import "strings"
+import (
+	"github.com/thomas-osgood/ssehandler/internal/utils"
+)
 
 /*
 normalize (trim + lower) each element in the Origins slice
@@ -11,21 +13,5 @@ func (co *CorsOptions) cleanOrigins() {
 		return
 	}
 
-	var added map[string]struct{} = make(map[string]struct{})
-	var exists bool
-	var n int = 0
-	var o string
-
-	for _, o = range co.Origins {
-		o = strings.ToLower(strings.TrimSpace(o))
-		if len(o) > 0 {
-			if _, exists = added[o]; !exists {
-				added[o] = struct{}{}
-				co.Origins[n] = o
-				n++
-			}
-		}
-	}
-
-	co.Origins = co.Origins[:n]
+	co.Origins = utils.UniqueSlice(co.Origins)
 }
