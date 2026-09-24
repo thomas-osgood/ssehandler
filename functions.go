@@ -90,7 +90,7 @@ func WithCORSMethod(method string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		method = strings.TrimSpace(method)
 		if len(method) < 1 {
-			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
+			return fmt.Errorf(ssemsg.ERR_EMPTY_METHOD)
 		}
 		so.CorsSettings.AllowedMethods = append(so.CorsSettings.AllowedMethods, strings.ToUpper(method))
 		return nil
