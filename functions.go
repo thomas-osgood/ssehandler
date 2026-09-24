@@ -17,7 +17,8 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	var defaults SSEHandlerOption = SSEHandlerOption{
 		Clients: nil,
 		CorsSettings: CorsOptions{
-			MaxAge: sseconst.DEFAULT_MAXAGE,
+			MaxAge:        sseconst.DEFAULT_MAXAGE,
+			ExposeHeaders: []string{sseconst.HEADER_ACEXPOSE_VAL},
 		},
 		CustomHeaders: make(HeaderMap),
 	}
