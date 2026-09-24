@@ -65,6 +65,20 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 	}
 }
 
+// signal to the browswer that credentials are allowed in
+// a CORS request.
+//
+// Credentials include cookies, Transport Layer Security (TLS) client certificates,
+// or authentication headers containing a username and password. By default, these
+// credentials are not sent in cross-origin requests, and doing so can make a site
+// vulnerable to Cross-Site Request Forgery (CSRF) attacks.
+func WithCORSAllowCreds() SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		so.CorsSettings.AllowCredentials = true
+		return nil
+	}
+}
+
 // add an allowed header to the list of allowed CORS expose headers.
 func WithCORSExposeHeader(header string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
