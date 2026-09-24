@@ -2,6 +2,7 @@ package ssehandler
 
 import (
 	"fmt"
+	"net/http"
 	"slices"
 	"strings"
 
@@ -71,7 +72,7 @@ func WithCORSExposeHeader(header string) SSEHandlerOptFunc {
 		if len(header) < 1 {
 			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
 		}
-		so.CorsSettings.ExposeHeaders = append(so.CorsSettings.ExposeHeaders, header)
+		so.CorsSettings.ExposeHeaders = append(so.CorsSettings.ExposeHeaders, http.CanonicalHeaderKey(header))
 		return nil
 	}
 }
