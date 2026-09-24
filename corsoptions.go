@@ -15,14 +15,7 @@ func (co *CorsOptions) cleanExposeHeaders() {
 		return
 	}
 
-	var idx int
-
-	co.ExposeHeaders = utils.UniqueSlice(co.ExposeHeaders, false)
-
-	// correct header casing using CanonicalHeaderKey from the http package.
-	for idx = range co.ExposeHeaders {
-		co.ExposeHeaders[idx] = http.CanonicalHeaderKey(co.ExposeHeaders[idx])
-	}
+	co.ExposeHeaders = utils.ToHeaderCase(utils.UniqueSlice(co.ExposeHeaders, false))
 }
 
 /*
