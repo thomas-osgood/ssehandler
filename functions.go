@@ -79,7 +79,7 @@ func WithCORSOrigin(origin string) SSEHandlerOptFunc {
 // set the allowed origins to the string slice passed in.
 func WithCORSOrigins(origins []string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
-		so.CorsSettings.Origins = origins
+		so.CorsSettings.Origins = slices.Clone(origins)
 		return nil
 	}
 }
