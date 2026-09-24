@@ -70,7 +70,7 @@ func WithCORSExposeHeader(header string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		header = strings.TrimSpace(header)
 		if len(header) < 1 {
-			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
+			return fmt.Errorf(ssemsg.ERR_EMPTY_HEADER)
 		}
 		so.CorsSettings.ExposeHeaders = append(so.CorsSettings.ExposeHeaders, http.CanonicalHeaderKey(header))
 		return nil
