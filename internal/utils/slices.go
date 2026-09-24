@@ -1,6 +1,24 @@
 package utils
 
-import "strings"
+import (
+	"net/http"
+	"strings"
+)
+
+/*
+helper function designed to take a string slice and convert each element
+to header case as defined by the http package's CanonicalHeaderKey func.
+*/
+func ToHeaderCase(original []string) []string {
+	var idx int
+
+	// correct header casing using CanonicalHeaderKey from the http package.
+	for idx = range original {
+		original[idx] = http.CanonicalHeaderKey(original[idx])
+	}
+
+	return original
+}
 
 /*
 helper function designed to take a string slice, normalize every element
