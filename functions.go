@@ -79,12 +79,32 @@ func WithCORSAllowCreds() SSEHandlerOptFunc {
 	}
 }
 
+// add an allowed header to the list of allowed CORS allowed headers.
+func WithCORSAllowHeader(header string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		header = strings.TrimSpace(header)
+		if len(header) < 1 {
+			return fmt.Errorf(ssemsg.ERR_EMPTY_HEADER_ALLOW)
+		}
+		so.CorsSettings.AllowHeaders = append(so.CorsSettings.AllowHeaders, http.CanonicalHeaderKey(header))
+		return nil
+	}
+}
+
+// set the allowed allow headers to the string slice passed in.
+func WithCORSAllowHeaders(headers []string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		so.CorsSettings.AllowHeaders = slices.Clone(headers)
+		return nil
+	}
+}
+
 // add an allowed header to the list of allowed CORS expose headers.
 func WithCORSExposeHeader(header string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		header = strings.TrimSpace(header)
 		if len(header) < 1 {
-			return fmt.Errorf(ssemsg.ERR_EMPTY_HEADER)
+			return fmt.Errorf(ssemsg.ERR_EMPTY_HEADER_EXPOSE)
 		}
 		so.CorsSettings.ExposeHeaders = append(so.CorsSettings.ExposeHeaders, http.CanonicalHeaderKey(header))
 		return nil
