@@ -65,7 +65,7 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 	}
 }
 
-// add an allowed origin to the list of allowed CORS expose headers.
+// add an allowed header to the list of allowed CORS expose headers.
 func WithCORSExposeHeader(header string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		header = strings.TrimSpace(header)
@@ -85,7 +85,7 @@ func WithCORSExposeHeaders(headers []string) SSEHandlerOptFunc {
 	}
 }
 
-// add an allowed origin to the list of allowed CORS methods.
+// add an allowed method to the list of allowed CORS methods.
 func WithCORSMethod(method string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
 		method = strings.TrimSpace(method)
