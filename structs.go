@@ -39,6 +39,9 @@ this is a structure internal to the SSEHandler package
 and is meant to be set during the New() call.
 */
 type CorsOptions struct {
+	// indicate the HTTP headers that can be used during the actual request.
+	// This is required if the preflight request contains Access-Control-Request-Headers.
+	AllowHeaders []string
 	// specifies one or more HTTP request methods allowed
 	// when accessing a resource in response to a preflight
 	// request.
