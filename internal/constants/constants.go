@@ -16,8 +16,11 @@ const GENERATE_ATTEMPT_MAX int = 10
 
 const HEADER_ACALLOW_NAM string = "Access-Control-Allow-Origin"
 const HEADER_ACALLOW_VAL string = "*"
+const HEADER_ACCREDS_NAM string = "Access-Control-Allow-Credentials"
 const HEADER_ACEXPOSE_NAM string = "Access-Control-Expose-Headers"
 const HEADER_ACEXPOSE_VAL string = "Content-Type"
+const HEADER_ACMAXAGE_NAM string = "Access-Control-Max-Age"
+const HEADER_ACMETHODS_NAM string = "Access-Control-Allow-Methods"
 const HEADER_ACCELBUFFER_NAM string = "X-Accel-Buffering"
 const HEADER_ACCELBUFFER_VAL string = "no"
 const HEADER_CACHE_NAM string = "Cache-Control"
