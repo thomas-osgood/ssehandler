@@ -6,6 +6,14 @@ import (
 	"github.com/thomas-osgood/ssehandler/internal/utils"
 )
 
+func (co *CorsOptions) cleanAllowHeaders() {
+	if co == nil || len(co.AllowHeaders) < 1 {
+		return
+	}
+
+	co.AllowHeaders = utils.ToHeaderCase(utils.UniqueSlice(co.AllowHeaders, false))
+}
+
 /*
 normalize each element, remove empty strings and remove
 duplicates from the ExposeHeaders slice.
