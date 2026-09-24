@@ -6,6 +6,10 @@ import (
 	"github.com/thomas-osgood/ssehandler/internal/utils"
 )
 
+/*
+normalize each element, remove empty strings and remove
+duplicates from the AllowHeaders slice.
+*/
 func (co *CorsOptions) cleanAllowHeaders() {
 	if co == nil || len(co.AllowHeaders) < 1 {
 		return
