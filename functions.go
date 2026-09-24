@@ -17,8 +17,7 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	var defaults SSEHandlerOption = SSEHandlerOption{
 		Clients: nil,
 		CorsSettings: CorsOptions{
-			MaxAge:        sseconst.DEFAULT_MAXAGE,
-			ExposeHeaders: []string{sseconst.HEADER_ACEXPOSE_VAL},
+			MaxAge: sseconst.DEFAULT_MAXAGE,
 		},
 		CustomHeaders: make(HeaderMap),
 	}
@@ -43,6 +42,11 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	// if no CORS Origins have been specified, default to "*"
 	if len(defaults.CorsSettings.Origins) < 1 {
 		defaults.CorsSettings.Origins = []string{sseconst.HEADER_ACALLOW_VAL}
+	}
+
+	// if no CORS Expose Headers value has been set, default to Content-Type
+	if len(defaults.CorsSettings.ExposeHeaders) < 1 {
+		defaults.CorsSettings.ExposeHeaders = []string{sseconst.HEADER_ACEXPOSE_VAL}
 	}
 
 	// assign the user-specified values to the SSEHandler to return.
