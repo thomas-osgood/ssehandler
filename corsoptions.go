@@ -69,6 +69,7 @@ func (co *CorsOptions) cleanOrigins() {
 go through all string slices and clean them.
 */
 func (co *CorsOptions) cleanSlices() {
+	co.cleanExposeHeaders()
 	co.cleanMethods()
 	co.cleanOrigins()
 }
