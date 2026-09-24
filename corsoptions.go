@@ -7,6 +7,18 @@ import (
 )
 
 /*
+normalize each element, remove empty strings and remove
+duplicates from the ExposeHeaders slice.
+*/
+func (co *CorsOptions) cleanExposeHeaders() {
+	if co == nil || len(co.ExposeHeaders) < 1 {
+		return
+	}
+
+	co.ExposeHeaders = utils.UniqueSlice(co.ExposeHeaders, false)
+}
+
+/*
 normalize each element, remove empty strings, remove duplicates
 and remove invalid methods in the AllowedMethods slice.
 */
