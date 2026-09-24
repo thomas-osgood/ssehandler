@@ -64,6 +64,26 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 	}
 }
 
+// add an allowed origin to the list of allowed CORS methods.
+func WithCORSMethod(method string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		method = strings.TrimSpace(method)
+		if len(method) < 1 {
+			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
+		}
+		so.CorsSettings.AllowedMethods = append(so.CorsSettings.AllowedMethods, strings.ToUpper(method))
+		return nil
+	}
+}
+
+// set the allowed methods to the string slice passed in.
+func WithCORSMethods(methods []string) SSEHandlerOptFunc {
+	return func(so *SSEHandlerOption) error {
+		so.CorsSettings.AllowedMethods = slices.Clone(methods)
+		return nil
+	}
+}
+
 // add an allowed origin to the list of CORS Origins.
 func WithCORSOrigin(origin string) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
