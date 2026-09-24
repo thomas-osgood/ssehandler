@@ -40,7 +40,7 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 
 	// if no CORS Origins have been specified, default to "*"
 	if len(defaults.CorsSettings.Origins) < 1 {
-		defaults.CorsSettings.Origins = slices.Insert(defaults.CorsSettings.Origins, 0, sseconst.HEADER_ACALLOW_VAL)
+		defaults.CorsSettings.Origins = []string{sseconst.HEADER_ACALLOW_VAL}
 	}
 
 	// assign the user-specified values to the SSEHandler to return.
