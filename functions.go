@@ -86,12 +86,12 @@ func WithCORSOrigins(origins []string) SSEHandlerOptFunc {
 
 // set any custom headers that are desired when setting up the SSE endpoint.
 // these will be set by the server upon client connection.
-func WithCustomHeaders(customHaders HeaderMap) SSEHandlerOptFunc {
+func WithCustomHeaders(customHeaders HeaderMap) SSEHandlerOptFunc {
 	return func(so *SSEHandlerOption) error {
-		if customHaders == nil {
+		if customHeaders == nil {
 			return fmt.Errorf(ssemsg.ERR_EMPTY_MAP)
 		}
-		so.CustomHeaders = customHaders
+		so.CustomHeaders = customHeaders
 		return nil
 	}
 }
