@@ -40,8 +40,8 @@ func NewSSEHandler(opts ...SSEHandlerOptFunc) (ssehandle *SSEHandler, err error)
 	defaults.CorsSettings.cleanSlices()
 
 	// if no CORS Origins have been specified, default to "*"
-	if len(defaults.CorsSettings.Origins) < 1 {
-		defaults.CorsSettings.Origins = []string{sseconst.HEADER_ACALLOW_VAL}
+	if len(defaults.CorsSettings.Origin) < 1 {
+		defaults.CorsSettings.Origin = sseconst.HEADER_ACALLOW_VAL
 	}
 
 	// if no CORS Expose Headers value has been set, default to Content-Type
@@ -151,15 +151,7 @@ func WithCORSOrigin(origin string) SSEHandlerOptFunc {
 		if len(origin) < 1 {
 			return fmt.Errorf(ssemsg.ERR_EMPTY_ORIGIN)
 		}
-		so.CorsSettings.Origins = append(so.CorsSettings.Origins, origin)
-		return nil
-	}
-}
-
-// set the allowed origins to the string slice passed in.
-func WithCORSOrigins(origins []string) SSEHandlerOptFunc {
-	return func(so *SSEHandlerOption) error {
-		so.CorsSettings.Origins = slices.Clone(origins)
+		so.CorsSettings.Origin = origin
 		return nil
 	}
 }

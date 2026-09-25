@@ -58,6 +58,6 @@ type CorsOptions struct {
 	// Access-Control-Allow-Methods and Access-Control-Allow-Headers
 	// headers) can be cached.
 	MaxAge int
-	// list of allowed origins for CORS
-	Origins []string
+	// allowed origin for CORS
+	Origin string
 }

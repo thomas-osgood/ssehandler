@@ -2,6 +2,7 @@ package ssehandler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/thomas-osgood/ssehandler/internal/utils"
 )
@@ -69,12 +70,12 @@ func (co *CorsOptions) cleanMethods() {
 normalize (trim + lower) each element in the Origins slice
 and remove the empty strings.
 */
-func (co *CorsOptions) cleanOrigins() {
-	if co == nil || len(co.Origins) < 1 {
+func (co *CorsOptions) cleanOrigin() {
+	if co == nil || len(co.Origin) < 1 {
 		return
 	}
 
-	co.Origins = utils.UniqueSlice(co.Origins, false)
+	co.Origin = strings.TrimSpace(co.Origin)
 }
 
 /*
@@ -84,5 +85,5 @@ func (co *CorsOptions) cleanSlices() {
 	co.cleanAllowHeaders()
 	co.cleanExposeHeaders()
 	co.cleanMethods()
-	co.cleanOrigins()
+	co.cleanOrigin()
 }
