@@ -22,7 +22,7 @@ func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 //
 // update 2026-09-04:
 // removed pre-existing check for client existence because of extremely small
-// potential of collisions. the check added unnecssary overhead.
+// potential of collisions. the check added unnecessary overhead.
 func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 
 	id, err = uuid.NewRandom()

@@ -70,7 +70,7 @@ func WithClientMap(clients SSEChannelMap) SSEHandlerOptFunc {
 	}
 }
 
-// signal to the browswer that credentials are allowed in
+// signal to the browser that credentials are allowed in
 // a CORS request.
 //
 // Credentials include cookies, Transport Layer Security (TLS) client certificates,
