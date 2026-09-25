@@ -67,8 +67,7 @@ func (co *CorsOptions) cleanMethods() {
 }
 
 /*
-normalize (trim + lower) each element in the Origins slice
-and remove the empty strings.
+normalize (trim + lower) Origin.
 */
 func (co *CorsOptions) cleanOrigin() {
 	if co == nil || len(co.Origin) < 1 {
