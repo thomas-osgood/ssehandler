@@ -61,6 +61,10 @@ func (sh *SSEHandler) setHeaders(w http.ResponseWriter) {
 		w.Header().Set(sseconst.HEADER_ACMETHODS_NAM, strings.Join(sh.corssettings.AllowedMethods, ", "))
 	}
 
+	if len(sh.corssettings.AllowHeaders) > 0 {
+		w.Header().Set(sseconst.HEADER_ACALLOW_HEADERS_NAM, strings.Join(sh.corssettings.AllowHeaders, ", "))
+	}
+
 	// set the user-defined custom headers.
 	for headerName, headerValue = range sh.customHeaders {
 		w.Header().Set(headerName, headerValue)
