@@ -2,6 +2,8 @@ package ssehandler
 
 import (
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/google/uuid"
 	sseconst "github.com/thomas-osgood/ssehandler/internal/constants"
@@ -20,7 +22,7 @@ func (sh *SSEHandler) cleanupClient(clientid uuid.UUID) {
 //
 // update 2026-09-04:
 // removed pre-existing check for client existence because of extremely small
-// potential of collisions. the check added unnecssary overhead.
+// potential of collisions. the check added unnecessary overhead.
 func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 
 	id, err = uuid.NewRandom()
@@ -39,13 +41,34 @@ func (sh *SSEHandler) generateID() (id uuid.UUID, err error) {
 func (sh *SSEHandler) setHeaders(w http.ResponseWriter) {
 	var headerName string
 	var headerValue string
+	var exposeHeaders string = strings.Join(sh.corssettings.ExposeHeaders, ", ")
 
 	// set the headers necessary for the server-sent-events to work.
-	w.Header().Set(sseconst.HEADER_ACALLOW_NAM, sseconst.HEADER_ACALLOW_VAL)
-	w.Header().Set(sseconst.HEADER_ACEXPOSE_NAM, sseconst.HEADER_ACEXPOSE_VAL)
+	w.Header().Set(sseconst.HEADER_ACEXPOSE_NAM, exposeHeaders)
 	w.Header().Set(sseconst.HEADER_ACCELBUFFER_NAM, sseconst.HEADER_ACCELBUFFER_VAL)
 	w.Header().Set(sseconst.HEADER_CONTENTTYPE_NAM, sseconst.HEADER_CONTENTTYPE_VAL)
 	w.Header().Set(sseconst.HEADER_CACHE_NAM, sseconst.HEADER_CACHE_VAL)
+
+	// set CORS headers if needed
+	if len(sh.corssettings.Origin) > 0 {
+		w.Header().Set(sseconst.HEADER_ACALLOW_NAM, sh.corssettings.Origin)
+	}
+
+	if sh.corssettings.AllowCredentials {
+		w.Header().Set(sseconst.HEADER_ACCREDS_NAM, strconv.FormatBool(sh.corssettings.AllowCredentials))
+	}
+
+	if sh.corssettings.MaxAge > 0 {
+		w.Header().Set(sseconst.HEADER_ACMAXAGE_NAM, strconv.Itoa(sh.corssettings.MaxAge))
+	}
+
+	if len(sh.corssettings.AllowedMethods) > 0 {
+		w.Header().Set(sseconst.HEADER_ACMETHODS_NAM, strings.Join(sh.corssettings.AllowedMethods, ", "))
+	}
+
+	if len(sh.corssettings.AllowHeaders) > 0 {
+		w.Header().Set(sseconst.HEADER_ACALLOW_HEADERS_NAM, strings.Join(sh.corssettings.AllowHeaders, ", "))
+	}
 
 	// set the user-defined custom headers.
 	for headerName, headerValue = range sh.customHeaders {
