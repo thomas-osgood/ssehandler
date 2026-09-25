@@ -52,7 +52,10 @@ func (sh *SSEHandler) setHeaders(w http.ResponseWriter) {
 	w.Header().Set(sseconst.HEADER_CACHE_NAM, sseconst.HEADER_CACHE_VAL)
 
 	// set CORS headers if needed
-	w.Header().Set(sseconst.HEADER_ACCREDS_NAM, strconv.FormatBool(sh.corssettings.AllowCredentials))
+	if sh.corssettings.AllowCredentials {
+		w.Header().Set(sseconst.HEADER_ACCREDS_NAM, strconv.FormatBool(sh.corssettings.AllowCredentials))
+	}
+
 	if sh.corssettings.MaxAge > 0 {
 		w.Header().Set(sseconst.HEADER_ACMAXAGE_NAM, strconv.Itoa(sh.corssettings.MaxAge))
 	}
